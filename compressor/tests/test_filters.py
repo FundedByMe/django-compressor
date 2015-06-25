@@ -132,6 +132,25 @@ class CssMinTestCase(TestCase):
                  "width:calc(99.99% * 4/12 - (30px - 30px * 4/12))}"
         self.assertEqual(output, CSSMinFilter(content).output())
 
+    def test_cssmin_filter_with_child_selector(self):
+        content = """.col4:nth-child(12n + 1) {
+        clear: left;
+        }
+        """
+        output = ".col4:nth-child(12n+1){clear:left}"
+        self.assertEqual(output, CSSMinFilter(content).output())
+
+    def test_cssmin_filter_with_complex_class_and_child_selector(self):
+        content = """.col4:nth-child(n) {
+        float: left;
+        margin-right: 30px;
+        clear: none;
+        }
+        """
+        output = ".col4:nth-child(n){float:left;margin-right:30px;" \
+                 "clear:none}"
+        self.assertEqual(output, CSSMinFilter(content).output())
+
 
 class CssAbsolutizingTestCase(TestCase):
     hashing_method = 'mtime'
