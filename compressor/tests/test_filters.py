@@ -151,6 +151,24 @@ class CssMinTestCase(TestCase):
                  "clear:none}"
         self.assertEqual(output, CSSMinFilter(content).output())
 
+    def test_cssmin_filter_with_child_and_calc(self):
+        """
+        """
+        content = """p {
+        background: rgb(51,102,153) url('../../images/image.gif');
+        width:     calc(99.99% * 4/12 - (30px - 30px * 4/12))
+        } .col4:nth-child(n) {
+        float: left;
+        margin-right: 30px;
+        clear: none;
+        }
+        """
+        output = "p{background:#369 url('../../images/image.gif');" \
+                 "width:calc(99.99% * 4/12 - (30px - 30px * 4/12))}" \
+                 ".col4:nth-child(n){float:left;margin-right:30px;clear:none}"
+        result = CSSMinFilter(content).output()
+        self.assertEqual(output, result)
+
 
 class CssAbsolutizingTestCase(TestCase):
     hashing_method = 'mtime'

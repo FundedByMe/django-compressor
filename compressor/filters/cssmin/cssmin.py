@@ -83,7 +83,6 @@ def remove_unnecessary_whitespace(css):
         :type css: str
         :returns: str
         """
-
         regex = re.compile(r"(^|\})(([^\{\:])+\:)+([^\{]*\{)")
         match = regex.search(css)
         while match:
@@ -110,7 +109,7 @@ def remove_unnecessary_whitespace(css):
         :returns: str
         """
 
-        regex = re.compile(r"calc\(.*\)")
+        regex = re.compile(r"calc\(([^};]+)\)")
         match = regex.search(css)
 
         i = 0   # iterator to assure unique dict value
