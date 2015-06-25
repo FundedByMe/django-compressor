@@ -103,6 +103,7 @@ class PrecompilerTestCase(TestCase):
 
 
 class CssMinTestCase(TestCase):
+
     def test_cssmin_filter(self):
         content = """p {
 
@@ -115,6 +116,20 @@ class CssMinTestCase(TestCase):
         """
         output = "p{background:#369 url('../../images/image.gif');" \
                  "color:calc(1px + 3% + 43em +5pt)}"
+        self.assertEqual(output, CSSMinFilter(content).output())
+
+    def test_cssmin_filter_with_complex_calc_statement(self):
+        content = """p {
+
+
+        background: rgb(51,102,153) url('../../images/image.gif');
+        width:     calc(99.99% * 4/12 - (30px - 30px * 4/12))
+
+
+        }
+        """
+        output = "p{background:#369 url('../../images/image.gif');" \
+                 "width:calc(99.99% * 4/12 - (30px - 30px * 4/12))}"
         self.assertEqual(output, CSSMinFilter(content).output())
 
 
